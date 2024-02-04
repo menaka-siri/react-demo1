@@ -6,17 +6,20 @@ function ListGroup() {
   // items = [];
   // items = ["Wattala", "Kandana", "Colombo"];
 
+  //Event handler
+  const handleClick = (event: MouseEvent) => console.log(event);
+
   return (
     <Fragment>
       <h1>LK City List</h1>
       {items.length === 0 && <p>No item found</p>}{" "}
       {/* trick: if first part is true, then jsx will display the second part*/}
       <ul className="list-group">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <li
             className="list-group-item"
             key={item}
-            onClick={() => console.log("Clicked: " + item + " "+ index)}
+            onClick={handleClick}
           >
             {item}
           </li>
