@@ -1,17 +1,25 @@
 import { Fragment } from "react";
+import { MouseEvent } from "react";
 
 function ListGroup() {
   let items = ["Wattala", "Kandana", "Colombo", "Jaffna", "Negombo"];
-  items = [];
+  // items = [];
   // items = ["Wattala", "Kandana", "Colombo"];
 
   return (
     <Fragment>
       <h1>LK City List</h1>
-      {items.length === 0 && <p>No item found</p>} {/* trick: if first part is true, then jsx will display the second part*/}
+      {items.length === 0 && <p>No item found</p>}{" "}
+      {/* trick: if first part is true, then jsx will display the second part*/}
       <ul className="list-group">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
+        {items.map((item, index) => (
+          <li
+            className="list-group-item"
+            key={item}
+            onClick={() => console.log("Clicked: " + item + " "+ index)}
+          >
+            {item}
+          </li>
         ))}
       </ul>
     </Fragment>
