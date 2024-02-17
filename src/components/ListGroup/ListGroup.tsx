@@ -1,5 +1,20 @@
 import { Fragment, useState } from "react";
-import styles from "./ListGroup.module.css";
+import "./ListGroup.css";
+import styled from "styled-components";
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+interface ListItemProps {
+  active: boolean;
+}
+
+const ListItem = styled.li<ListItemProps>`
+  padding: 5px 0;
+  background: ${(props) => (props.active ? "lightseagreen" : "none")};
+`;
 
 interface Props {
   items: string[];
@@ -7,13 +22,12 @@ interface Props {
   onSelectItem: (item: string) => void;
 }
 
-function ListGroup({items, heading, onSelectItem}: Props) {
-  
+function ListGroup({ items, heading, onSelectItem }: Props) {
   // items = [];
   // items = ["Wattala", "Kandana", "Colombo"];
 
   //State Hook
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(3);
   /*
   useState returns an array of two elements
   eg: const arr = useState(-1);
@@ -26,14 +40,10 @@ function ListGroup({items, heading, onSelectItem}: Props) {
       <h1> {heading} </h1>
       {items.length === 0 && <p>No item found</p>}{" "}
       {/* trick: if first part is true, then jsx will display the second part*/}
-      <ul className={[styles.ListGroup, styles.container].join(' ')}>
+      <List>
         {items.map((item, index) => (
-          <li
-            className={
-              selectedIndex === index
-                ? "list-group-item active"
-                : "list-group-item"
-            }
+          <ListItem
+            active={index === selectedIndex}
             key={item}
             onClick={() => {
               setSelectedIndex(index);
@@ -41,9 +51,9 @@ function ListGroup({items, heading, onSelectItem}: Props) {
             }}
           >
             {item}
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </Fragment>
   );
 }
