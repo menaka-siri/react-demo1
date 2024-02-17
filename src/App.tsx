@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
+import ListGroup from "./components/ListGroup";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -9,6 +10,14 @@ function App() {
     setAlertVisibility(false);
     console.log("Alert Closed");
   }
+
+  let items = ["Wattala", "Kandana", "Colombo", "Jaffna", "Negombo"];
+  // items = [];
+  // items = ["Wattala", "Kandana", "Colombo"];
+
+  const handleSelectItem = (item: string) => {
+    console.log(item);
+  };
 
   return (
     <div>
@@ -22,6 +31,9 @@ function App() {
       >
         Show Alert
       </Button>
+      <ListGroup items={items} heading="LK Cities" onSelectItem={handleSelectItem}>
+
+      </ListGroup>
     </div>
   );
 }
