@@ -2,7 +2,8 @@ import { useState } from "react";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
 import ListGroup from "./components/ListGroup";
-import './App.css';
+import { BsCalendarFill } from "react-icons/bs";
+import "./App.css";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -10,7 +11,7 @@ function App() {
   const onAlertClose = () => {
     setAlertVisibility(false);
     console.log("Alert Closed");
-  }
+  };
 
   let items = ["Wattala", "Kandana", "Colombo", "Jaffna", "Negombo"];
   // items = [];
@@ -32,9 +33,11 @@ function App() {
       >
         Show Alert
       </Button>
-      <ListGroup items={items} heading="LK Cities" onSelectItem={handleSelectItem}>
-
-      </ListGroup>
+      <ListGroup
+        items={items}
+        heading="LK Cities"
+        onSelectItem={handleSelectItem}
+      ></ListGroup>
     </div>
   );
 }
