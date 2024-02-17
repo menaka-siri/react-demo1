@@ -5,7 +5,7 @@ interface Props {
   heading: string;
 }
 
-function ListGroup(props: Props) {
+function ListGroup({items, heading}: Props) {
   
   // items = [];
   // items = ["Wattala", "Kandana", "Colombo"];
@@ -21,11 +21,11 @@ function ListGroup(props: Props) {
 
   return (
     <Fragment>
-      <h1> {props.heading} </h1>
-      {props.items.length === 0 && <p>No item found</p>}{" "}
+      <h1> {heading} </h1>
+      {items.length === 0 && <p>No item found</p>}{" "}
       {/* trick: if first part is true, then jsx will display the second part*/}
       <ul className="list-group">
-        {props.items.map((item, index) => (
+        {items.map((item, index) => (
           <li
             className={
               selectedIndex === index
