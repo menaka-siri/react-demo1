@@ -38,6 +38,7 @@ function App() {
         heading="LK Cities"
         onSelectItem={handleSelectItem}
       ></ListGroup>
+      <BsCalendarFill color="red" size="80"></BsCalendarFill>
     </div>
   );
 }
