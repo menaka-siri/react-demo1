@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Alert from "./components/Alert";
-import Button from "./components/Button";
+import Button from "./components/Button/Button";
 import ListGroup from "./components/ListGroup";
 import { BsCalendarFill } from "react-icons/bs";
 import "./App.css";
+import Like from "./components/Like";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -25,7 +26,7 @@ function App() {
     <div>
       {alertVisible && <Alert onClose={onAlertClose}>My Alert</Alert>}
       <Button
-        color="danger"
+        // color="danger"
         onClick={() => {
           console.log("Clicked");
           setAlertVisibility(true);
@@ -38,7 +39,8 @@ function App() {
         heading="LK Cities"
         onSelectItem={handleSelectItem}
       ></ListGroup>
-      <BsCalendarFill color="red" size="80"></BsCalendarFill>
+      <BsCalendarFill color="red" size="80"></BsCalendarFill><br></br>
+      <Like onClick={ () => console.log("Heart clicked from App.tsx")}/>
     </div>
   );
 }
