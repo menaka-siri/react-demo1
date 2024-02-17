@@ -1,7 +1,12 @@
 import { Fragment, useState } from "react";
 
-function ListGroup() {
-  let items = ["Wattala", "Kandana", "Colombo", "Jaffna", "Negombo"];
+interface Props {
+  items: string[];
+  heading: string;
+}
+
+function ListGroup(props: Props) {
+  
   // items = [];
   // items = ["Wattala", "Kandana", "Colombo"];
 
@@ -16,11 +21,11 @@ function ListGroup() {
 
   return (
     <Fragment>
-      <h1>LK City List</h1>
-      {items.length === 0 && <p>No item found</p>}{" "}
+      <h1> {props.heading} </h1>
+      {props.items.length === 0 && <p>No item found</p>}{" "}
       {/* trick: if first part is true, then jsx will display the second part*/}
       <ul className="list-group">
-        {items.map((item, index) => (
+        {props.items.map((item, index) => (
           <li
             className={
               selectedIndex === index
