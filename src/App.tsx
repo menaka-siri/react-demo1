@@ -8,6 +8,7 @@ import Like from "./components/Like";
 import NavBar from "./components/NavBar";
 import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
+import Form from "./components/Form";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -95,6 +96,8 @@ function App() {
       <ExpandableText>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat esse perferendis laboriosam sequi, placeat aperiam id ullam sed quibusdam aliquid. Vel voluptates fugiat tenetur odit praesentium ad dolorem, iste aut inventore et dolore quam voluptatem! Velit quas doloribus a! Expedita consectetur provident nulla, dolorum sapiente neque sequi magni accusamus numquam obcaecati? Nam neque ducimus, possimus suscipit accusamus dolorem incidunt assumenda nemo, eveniet illum minus cupiditate voluptatibus animi recusandae odit consectetur dignissimos sed, necessitatibus iste. Reprehenderit magni voluptas quas nulla sint accusamus vitae nisi. Tempore ducimus distinctio dolor reprehenderit necessitatibus, quos consequuntur temporibus rerum. Nemo, laboriosam quam repellat aliquid earum ut.
       </ExpandableText>
+
+      <Form></Form>
     </div>
   );
 }
