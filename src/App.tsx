@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
+import ProductList from "./components/ProductList";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -27,6 +28,8 @@ function App() {
   };
 
   const [cartItems, setCartItems] = useState(["Product1", "Product2"]);
+
+  const [category, setCategory] = useState("");
 
   //Managing Component States - Exercise-12-a
   /* const [game, setGame] = useState({
@@ -77,7 +80,7 @@ function App() {
     if (testFocus.current) testFocus.current.focus();
   });
 
-  useEffect( () => {
+  useEffect(() => {
     document.title = "My App";
   });
 
@@ -124,6 +127,16 @@ function App() {
       <br></br>
       <label> Test focus:</label>
       <input ref={testFocus} type="text" className="form-control"></input>
+      <br></br>
+      <select
+        className="form-select"
+        onChange={(event) => setCategory(event.target.value)}
+      >
+        <option value=""></option>
+        <option value="Clothing">Clothing</option>
+        <option value="Household">Household</option>
+      </select>
+      <ProductList category={category}></ProductList>
     </div>
   );
 }
