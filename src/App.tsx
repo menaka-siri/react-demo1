@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Alert from "./components/Alert";
 import Button from "./components/Button/Button";
 import ListGroup from "./components/ListGroup";
@@ -69,6 +69,18 @@ function App() {
     });
   }; */
 
+  const testFocus = useRef<HTMLInputElement>(null);
+
+  //useEffect should be named as "afterRender" for more clarity
+  useEffect(() => {
+    //Side effect
+    if (testFocus.current) testFocus.current.focus();
+  });
+
+  useEffect( () => {
+    document.title = "My App";
+  });
+
   return (
     <div>
       {alertVisible && <Alert onClose={onAlertClose}>My Alert</Alert>}
@@ -94,10 +106,24 @@ function App() {
       <Cart cartItems={cartItems} onClear={() => setCartItems([])} />
 
       <ExpandableText>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat esse perferendis laboriosam sequi, placeat aperiam id ullam sed quibusdam aliquid. Vel voluptates fugiat tenetur odit praesentium ad dolorem, iste aut inventore et dolore quam voluptatem! Velit quas doloribus a! Expedita consectetur provident nulla, dolorum sapiente neque sequi magni accusamus numquam obcaecati? Nam neque ducimus, possimus suscipit accusamus dolorem incidunt assumenda nemo, eveniet illum minus cupiditate voluptatibus animi recusandae odit consectetur dignissimos sed, necessitatibus iste. Reprehenderit magni voluptas quas nulla sint accusamus vitae nisi. Tempore ducimus distinctio dolor reprehenderit necessitatibus, quos consequuntur temporibus rerum. Nemo, laboriosam quam repellat aliquid earum ut.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat esse
+        perferendis laboriosam sequi, placeat aperiam id ullam sed quibusdam
+        aliquid. Vel voluptates fugiat tenetur odit praesentium ad dolorem, iste
+        aut inventore et dolore quam voluptatem! Velit quas doloribus a!
+        Expedita consectetur provident nulla, dolorum sapiente neque sequi magni
+        accusamus numquam obcaecati? Nam neque ducimus, possimus suscipit
+        accusamus dolorem incidunt assumenda nemo, eveniet illum minus
+        cupiditate voluptatibus animi recusandae odit consectetur dignissimos
+        sed, necessitatibus iste. Reprehenderit magni voluptas quas nulla sint
+        accusamus vitae nisi. Tempore ducimus distinctio dolor reprehenderit
+        necessitatibus, quos consequuntur temporibus rerum. Nemo, laboriosam
+        quam repellat aliquid earum ut.
       </ExpandableText>
 
       <Form></Form>
+      <br></br>
+      <label> Test focus:</label>
+      <input ref={testFocus} type="text" className="form-control"></input>
     </div>
   );
 }
