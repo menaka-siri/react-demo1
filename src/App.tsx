@@ -91,11 +91,17 @@ function App() {
   });
 
   const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState("");
 
-  useEffect(()=>{
-    axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
-    .then(res => setUsers(res.data));
-  }, []); 
+  useEffect(() => {
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+      .then((res) => setUsers(res.data))
+      .catch((err) => {
+        setError(err.message);
+        console.log(err);
+      });
+  }, []);
   //add an empty arra as a dependency of this use effect to stop infinite loop
   //on calling the endpoint
 
@@ -119,10 +125,8 @@ function App() {
       <BsCalendarFill color="red" size="80"></BsCalendarFill>
       <br></br>
       <Like onClick={() => console.log("Heart clicked from App.tsx")} />
-
       <NavBar cartItemsCount={cartItems.length}></NavBar>
       <Cart cartItems={cartItems} onClear={() => setCartItems([])} />
-
       <ExpandableText>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat esse
         perferendis laboriosam sequi, placeat aperiam id ullam sed quibusdam
@@ -137,7 +141,6 @@ function App() {
         necessitatibus, quos consequuntur temporibus rerum. Nemo, laboriosam
         quam repellat aliquid earum ut.
       </ExpandableText>
-
       <Form></Form>
       <br></br>
       <label> Test focus:</label>
@@ -152,11 +155,13 @@ function App() {
         <option value="Household">Household</option>
       </select>
       <ProductList category={category}></ProductList>
-
       <br></br>
       Users List
+      {error && <p className="text-danger">{error}</p>}
       <ul>
-        { users.map( item => <li key={item.id}>{item.name}</li>)}
+        {users.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
       </ul>
     </div>
   );
