@@ -10,7 +10,7 @@ import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface User {
   id: number;
@@ -94,13 +94,28 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-      .then((res) => setUsers(res.data))
-      .catch((err) => {
-        setError(err.message);
+    // axios
+    //   .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+    //   .then((res) => setUsers(res.data))
+    //   .catch((err) => {
+    //     setError(err.message);
+    //     console.log(err);
+    //   });
+
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get<User[]>(
+          "https://jsonplaceholder.typicode.com/xusers"
+        );
+        setUsers(res.data);
+      } catch (err) {
+        //'err as AxiosError' -> this pattern is "type assertion"
+        setError((err as AxiosError).message);
         console.log(err);
-      });
+      }
+    };
+
+    fetchUsers();
   }, []);
   //add an empty arra as a dependency of this use effect to stop infinite loop
   //on calling the endpoint
