@@ -102,6 +102,9 @@ function App() {
     //     console.log(err);
     //   });
 
+
+    //Note: the above then-catch pattern is preferred by Mosh
+    // compared to the below try-catch pattern
     const fetchUsers = async () => {
       try {
         const res = await axios.get<User[]>(
