@@ -136,6 +136,18 @@ function App() {
   //add an empty arra as a dependency of this use effect to stop infinite loop
   //on calling the endpoint
 
+  const deleteUser = (user: User) => {
+    const originalUsers = [...users];
+    setUsers(users.filter((item) => item.id !== user.id));
+
+    axios
+      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <div>
       {alertVisible && <Alert onClose={onAlertClose}>My Alert</Alert>}
@@ -190,9 +202,20 @@ function App() {
       Users List
       {error && <p className="text-danger">{error}</p>}
       {isLoading && <div className="spinner-border"></div>}
-      <ul>
-        {users.map((item) => (
-          <li key={item.id}>{item.name}</li>
+      <ul className="list-group">
+        {users.map((user) => (
+          <li
+            key={user.id}
+            className="list-group-item d-flex justify-content-between"
+          >
+            {user.name}
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => deleteUser(user)}
+            >
+              Delete
+            </button>
+          </li>
         ))}
       </ul>
     </div>
