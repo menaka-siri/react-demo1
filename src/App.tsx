@@ -94,18 +94,19 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // axios
-    //   .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-    //   .then((res) => setUsers(res.data))
-    //   .catch((err) => {
-    //     setError(err.message);
-    //     console.log(err);
-    //   });
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+      .then((res) => setUsers(res.data))
+      .catch((err) => {
+        setError(err.message);
+        console.log(err);
+      });
 
 
     //Note: the above then-catch pattern is preferred by Mosh
     // compared to the below try-catch pattern
     // also note the below async is a function inside the function of useEffect
+    /*
     const fetchUsers = async () => {
       try {
         const res = await axios.get<User[]>(
@@ -118,8 +119,9 @@ function App() {
         console.log(err);
       }
     };
-
     fetchUsers();
+    */
+
   }, []);
   //add an empty arra as a dependency of this use effect to stop infinite loop
   //on calling the endpoint
