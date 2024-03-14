@@ -10,7 +10,7 @@ import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, CanceledError } from "axios";
 
 interface User {
   id: number;
@@ -94,14 +94,19 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController(); //this is built in browser function
     axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+        signal: controller.signal,
+      })
       .then((res) => setUsers(res.data))
       .catch((err) => {
+        if (err instanceof CanceledError) return;
         setError(err.message);
         console.log(err);
       });
 
+    return () => controller.abort();
 
     //Note: the above then-catch pattern is preferred by Mosh
     // compared to the below try-catch pattern
@@ -121,7 +126,6 @@ function App() {
     };
     fetchUsers();
     */
-
   }, []);
   //add an empty arra as a dependency of this use effect to stop infinite loop
   //on calling the endpoint
