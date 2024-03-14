@@ -90,12 +90,14 @@ function App() {
     document.title = "My App";
   });
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(()=>{
     axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
-    .then(res => console.log(res.data[0].name));
-  });
+    .then(res => setUsers(res.data));
+  }, []); 
+  //add an empty arra as a dependency of this use effect to stop infinite loop
+  //on calling the endpoint
 
   return (
     <div>
@@ -150,6 +152,12 @@ function App() {
         <option value="Household">Household</option>
       </select>
       <ProductList category={category}></ProductList>
+
+      <br></br>
+      Users List
+      <ul>
+        { users.map( item => <li key={item.id}>{item.name}</li>)}
+      </ul>
     </div>
   );
 }
