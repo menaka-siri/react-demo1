@@ -10,6 +10,7 @@ import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
+import axios from "axios";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
