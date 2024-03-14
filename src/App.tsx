@@ -12,6 +12,11 @@ import Form from "./components/Form";
 import ProductList from "./components/ProductList";
 import axios from "axios";
 
+interface User {
+  id: number;
+  name: string;
+}
+
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
 
@@ -83,6 +88,13 @@ function App() {
 
   useEffect(() => {
     document.title = "My App";
+  });
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(()=>{
+    axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
+    .then(res => console.log(res.data[0].name));
   });
 
   return (
