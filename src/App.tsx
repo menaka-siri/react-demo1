@@ -10,12 +10,8 @@ import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
-import apiClient, {CanceledError} from "./services/api-client";
-
-interface User {
-  id: number;
-  name: string;
-}
+import apiClient, { CanceledError } from "./services/api-client";
+import userService, { User } from "./services/user-service";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -95,12 +91,9 @@ function App() {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController(); //this is built in browser function
     setLoading(true);
-    apiClient
-      .get<User[]>("/users", {
-        signal: controller.signal,
-      })
+    const { request, cancel } = userService.getAllUsers();
+    request
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -112,7 +105,7 @@ function App() {
         setLoading(false);
       });
 
-    return () => controller.abort();
+    return () => cancel();
 
     //Note: the above then-catch pattern is preferred by Mosh
     // compared to the below try-catch pattern
@@ -140,12 +133,10 @@ function App() {
     const originalUsers = [...users];
     setUsers(users.filter((item) => item.id !== user.id));
 
-    apiClient
-      .delete("/users/" + user.id)
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    apiClient.delete("/users/" + user.id).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   const addUser = () => {
@@ -170,15 +161,10 @@ function App() {
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-    apiClient
-      .patch(
-        "/users/" + user.id,
-        updatedUser
-      )
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    apiClient.patch("/users/" + user.id, updatedUser).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   return (
