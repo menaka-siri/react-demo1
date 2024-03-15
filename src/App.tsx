@@ -148,6 +148,18 @@ function App() {
       });
   };
 
+  const addUser = () => {
+    const newUser = { id: 0, name: "Mosh" };
+    setUsers([newUser, ...users]);
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/users/", newUser)
+      .then((res) => {
+        setUsers([res.data, ...users]);
+        console.log(users);
+      });
+  };
+
   return (
     <div>
       {alertVisible && <Alert onClose={onAlertClose}>My Alert</Alert>}
@@ -202,6 +214,9 @@ function App() {
       Users List
       {error && <p className="text-danger">{error}</p>}
       {isLoading && <div className="spinner-border"></div>}
+      <button className="btn btn-primary mb-3" onClick={addUser}>
+        Add
+      </button>
       <ul className="list-group">
         {users.map((user) => (
           <li
