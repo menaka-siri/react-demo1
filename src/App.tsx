@@ -149,14 +149,19 @@ function App() {
   };
 
   const addUser = () => {
+    const originalUsers = [...users];
     const newUser = { id: 0, name: "Mosh" };
     setUsers([newUser, ...users]);
 
     axios
-      .post("https://jsonplaceholder.typicode.com/users/", newUser)
-      .then((res) => {
-        setUsers([res.data, ...users]);
-        console.log(users);
+      .post("https://jsonplaceholder.typicode.com/xusers/", newUser)
+      .then(({ data: savedUser }) => {
+        //savedUser is only an alias
+        setUsers([savedUser, ...users]);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
       });
   };
 
