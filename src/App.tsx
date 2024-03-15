@@ -10,7 +10,7 @@ import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
-import axios, { AxiosError, CanceledError } from "axios";
+import apiClient, {CanceledError} from "./services/api-client";
 
 interface User {
   id: number;
@@ -97,8 +97,8 @@ function App() {
   useEffect(() => {
     const controller = new AbortController(); //this is built in browser function
     setLoading(true);
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+    apiClient
+      .get<User[]>("/users", {
         signal: controller.signal,
       })
       .then((res) => {
@@ -140,8 +140,8 @@ function App() {
     const originalUsers = [...users];
     setUsers(users.filter((item) => item.id !== user.id));
 
-    axios
-      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+    apiClient
+      .delete("/users/" + user.id)
       .catch((err) => {
         setError(err.message);
         setUsers(originalUsers);
@@ -153,8 +153,8 @@ function App() {
     const newUser = { id: 0, name: "Mosh" };
     setUsers([newUser, ...users]);
 
-    axios
-      .post("https://jsonplaceholder.typicode.com/users/", newUser)
+    apiClient
+      .post("/users/", newUser)
       .then(({ data: savedUser }) => {
         //savedUser is only an alias
         setUsers([savedUser, ...users]);
@@ -170,9 +170,9 @@ function App() {
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-    axios
+    apiClient
       .patch(
-        "https://jsonplaceholder.typicode.com/xxxusers/" + user.id,
+        "/users/" + user.id,
         updatedUser
       )
       .catch((err) => {
