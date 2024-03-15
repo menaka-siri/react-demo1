@@ -154,7 +154,7 @@ function App() {
     setUsers([newUser, ...users]);
 
     axios
-      .post("https://jsonplaceholder.typicode.com/xusers/", newUser)
+      .post("https://jsonplaceholder.typicode.com/users/", newUser)
       .then(({ data: savedUser }) => {
         //savedUser is only an alias
         setUsers([savedUser, ...users]);
@@ -172,7 +172,7 @@ function App() {
 
     axios
       .patch(
-        "https://jsonplaceholder.typicode.com/users/" + user.id,
+        "https://jsonplaceholder.typicode.com/xxxusers/" + user.id,
         updatedUser
       )
       .catch((err) => {
