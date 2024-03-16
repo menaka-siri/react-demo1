@@ -12,6 +12,7 @@ import Form from "./components/Form";
 import ProductList from "./components/ProductList";
 import { CanceledError } from "./services/api-client";
 import userService, { User } from "./services/user-service";
+import useUsers from "./hooks/useUsers";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
@@ -86,48 +87,7 @@ function App() {
     document.title = "My App";
   });
 
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    const { request, cancel } = userService.getAll<User>();
-    request
-      .then((res) => {
-        setUsers(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        console.log(err);
-        setLoading(false);
-      });
-
-    return () => cancel();
-
-    //Note: the above then-catch pattern is preferred by Mosh
-    // compared to the below try-catch pattern
-    // also note the below async is a function inside the function of useEffect
-    /*
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get<User[]>(
-          "https://jsonplaceholder.typicode.com/xusers"
-        );
-        setUsers(res.data);
-      } catch (err) {
-        //'err as AxiosError' -> this pattern is "type assertion"
-        setError((err as AxiosError).message);
-        console.log(err);
-      }
-    };
-    fetchUsers();
-    */
-  }, []);
-  //add an empty arra as a dependency of this use effect to stop infinite loop
-  //on calling the endpoint
+  const {users, error, isLoading, setUsers, setError} = useUsers();
 
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
